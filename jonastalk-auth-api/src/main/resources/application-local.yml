@@ -1,0 +1,33 @@
+# ================================
+# Spring
+spring:
+  config:
+    activate:
+      on-profile: "local"
+  # --------------
+  # Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 1234
+    client-name: jonastalk-auth-api
+    netty-threads: 10
+    idle-connection-timeout: 10000
+    connect-timeout: 10000
+    timeout: 3000
+    retry-attempts: 3
+    retry-interval: 1500
+    subscriptions-per-connection: 5
+    subscription-connection-minimum-idle-size: 1
+    subscription-connection-pool-size: 50
+    connection-minimum-idle-size: 10
+    connection-pool-size: 100
+    database: 0
+    dns-monitoring-interval: 5000
+    keep-alive: true
+    thread-cnt: 30
+    lock:
+      get: false
+      put: true
+      wait-sec: 10
+      lease-sec: 30

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jonastalk</groupId>
 	<artifactId>jonastalk-auth-api</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>war</packaging>
 	<name>jonastalk-auth-api</name>
 	<description>Jonastalk Project by Jonas (KyungTaek Lim) (www.linkedin.com/in/kyungtaek-jonas-lim-software-engineer)</description>
@@ -88,6 +88,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+		
+		<!-- Spring Boot Configuration -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- Redisson For Redis -->
+		<dependency>
+		    <groupId>org.redisson</groupId>
+		    <artifactId>redisson</artifactId>
+		    <version>3.24.3</version>
+		</dependency>
+		
+		<!-- SpringFox - Swagger & Spring MVC -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-boot-starter</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
 		
 	</dependencies>
 	
