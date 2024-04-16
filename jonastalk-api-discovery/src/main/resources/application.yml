@@ -1,0 +1,13 @@
+server:
+  port: 8999
+  
+spring:
+  application:
+    name: jonastalk-api-discovery
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:8999/eureka

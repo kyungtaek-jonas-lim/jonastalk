@@ -1,0 +1,43 @@
+# ================================
+# System
+server:
+  port: 8001
+  
+  
+# ================================
+# Spring
+spring:
+  # --------------
+  # Profiles
+  profiles:
+    active: local
+  # --------------
+  # Cloud App Name
+  application:
+    name: jonastalk-chat-api
+  # --------------
+  # MVC
+  mvc:
+    static-locations: /resources/**
+    view:
+      prefix: /WEB-INF/chat/
+      suffix: .jsp
+  # --------------
+  # Server Auto Restart
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+
+  
+# ================================
+# Eureka
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8999/eureka

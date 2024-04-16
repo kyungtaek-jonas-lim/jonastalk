@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "7f645b89-9d24-4f3c-8b33-f165b8c1bb79",
+		"name": "Jonastalk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24793284"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "common",
+					"item": [
+						{
+							"name": "test",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8443/auth/common/test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"auth",
+										"common",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "chat",
+			"item": [
+				{
+					"name": "common",
+					"item": [
+						{
+							"name": "test",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8443/chat/common/test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"chat",
+										"common",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,64 @@
+# ===============================
+# Server
+server:
+  port: 8443
+
+
+# ===============================
+# Eureka
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8999/eureka
+
+
+# ===============================
+# Spring
+spring:
+  application:
+    name: jonastalk-api-gw
+  main:
+    web-application-type: reactive
+  # --------------
+  # Server Auto restart
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  cloud:
+    gateway:
+      routes:
+        - id: jonastalk-chat-api
+          uri: lb://jonastalk-chat-api
+          predicates:
+            - Path=/chat/**
+          filters:
+            - name: CustomFilter
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/chat/(?<segment>.*), /$\{segment}
+            - name: LoggingFilter
+              args:
+                message: jonastalk-chat-api
+                showPreLogger: true
+                showPostLogger: true
+        - id: jonastalk-auth-api
+          uri: lb://jonastalk-auth-api
+          predicates:
+            - Path=/auth/**, /j_spring_security_check
+          filters:
+            - name: CustomFilter
+            - RewritePath=/auth/(?<segment>.*), /$\{segment}
+            - name: LoggingFilter
+              args:
+                message: jonastalk-auth-api
+                showPreLogger: true
+                showPostLogger: true
+      default-filters:
+        - name: GlobalFilter
+          args:
+            message: Spring Cloud Gateway GlobalFilter Message
+            showPreLogger: true
+            showPostLogger: true

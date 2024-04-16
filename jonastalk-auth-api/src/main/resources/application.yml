@@ -1,0 +1,48 @@
+# ================================
+# System
+server:
+  port: 8002
+    
+
+# ================================
+# Spring
+spring:
+  # --------------
+  # Profiles
+  profiles:
+    active: local
+  # --------------
+  # Cloud
+  application:
+    name: jonastalk-auth-api
+  # --------------
+  # Web
+  web:
+    resources:
+      static-locations: /resources/
+      cache:
+        period: 10
+  # --------------
+  # MVC
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER # For Swagger
+  # --------------
+  # Server Auto restart
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+
+      
+# ================================
+# Eureka
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8999/eureka
