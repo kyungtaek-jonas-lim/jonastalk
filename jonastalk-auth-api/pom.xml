@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jonastalk</groupId>
 	<artifactId>jonastalk-auth-api</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<packaging>war</packaging>
 	<name>jonastalk-auth-api</name>
 	<description>Jonastalk Project by Jonas (KyungTaek Lim) (www.linkedin.com/in/kyungtaek-jonas-lim-software-engineer)</description>
@@ -65,7 +65,7 @@
 		</dependency>
 		
 		<!-- Spring Security -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -73,7 +73,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency> -->
+		</dependency>
 		
 		<!-- Spring Boot Dev Tools -->
 		<dependency>
@@ -109,6 +109,33 @@
 		    <artifactId>springfox-boot-starter</artifactId>
 		    <version>3.0.0</version>
 		</dependency>
+        
+		<!-- ULID-->
+		<dependency>
+		    <groupId>io.azam.ulidj</groupId>
+		    <artifactId>ulidj</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
+		
+		<!-- JWT -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.1</version>
+		</dependency>
+		
+		<!-- log4j2 mybatis sql pretty -->
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+		    <version>1.16</version>
+		</dependency>
+		
+        <!-- log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
 		
 	</dependencies>
 	

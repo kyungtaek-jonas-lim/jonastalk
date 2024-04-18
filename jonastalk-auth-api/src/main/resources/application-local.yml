@@ -31,3 +31,25 @@ spring:
       put: true
       wait-sec: 10
       lease-sec: 30
+
+  
+  
+# ================================ 
+# Log
+logging:
+  level:
+    com:
+      jonasweet:
+        web: DEBUG
+      zaxxer:
+        hikari: INFO
+    javax:
+      sql:
+        DataSource: OFF
+    jdbc:
+      audit: OFF
+      resultset: OFF
+      resultsettable: OFF  # Log SQL Result Data Table
+      sqlonly: OFF    # Log SQL
+      sqltiming: INFO    # SQL, Time
+      connection : OFF  # Connection check

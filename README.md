@@ -18,15 +18,18 @@
 	> Port : 8443
 
 ## Last Update
-	[2024-04-16]  auth - Redis, Common Source
+	[2024-04-18]  auth - AOP (Auto Validation), Log4j2, Encryption, Activated Spring Security (No Config)
 		> jonastalk-api-gw - v.0.0.1
 		> jonastalk-discovery - v.0.0.1
-		> jonastalk-auth-api - v.0.0.2 - Redis, Common Source
+		> jonastalk-auth-api - v.0.0.3 - AOP (Auto Validation), Log4j2, Encryption, Activated Spring Security (No Config)
 		> jonastalk-chat-api - v.0.0.1
 
 
 ## jonastalk-auth-api
 	> Authentication & Authorization
+	> Encryption (RSA)
+	> AOP (Auto Validation)
+	> Log4j2
 	> Redis (Redisson)
 	> Swagger
 

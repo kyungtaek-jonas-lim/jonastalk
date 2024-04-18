@@ -46,3 +46,29 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8999/eureka
+    
+          
+# ================================
+# RSA
+rsa:
+  filepath:
+    jwt:
+      privateKey: private_key_jwt.pem
+      publicKey: public_key_jwt.pem
+    password:
+      privateKey: private_key_password.pem
+      publicKey: public_key_password.pem
+  
+  
+  
+# ================================ 
+# Logging
+logging:
+  file:
+    path: ./logs
+    name: web-auth-api-gw.log
+    max-history: 30
+  pattern:
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:line - %line] - %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method - %line] - %msg%n"
+    rolling-file-name: "./logs/web-blog-jonaslog.%d{yyyy-MM-dd}.%i"
