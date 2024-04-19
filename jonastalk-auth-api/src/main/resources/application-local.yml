@@ -5,6 +5,22 @@ spring:
     activate:
       on-profile: "local"
   # --------------
+  # DB
+  datasource:
+    # JDBC with log4j
+    url: jdbc:log4jdbc:mariadb://127.0.0.1:3306/jonastalk
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: ENC(Inj6f4uWRyNr64LV+wP+v6ATYWi9Fx2T)
+    password: ENC(rbehroO9rtReft7xWi8Pjw==)
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+  # --------------
   # Redis
   redis:
     host: 127.0.0.1

@@ -9,7 +9,6 @@
 	> Web Chat Application
 	> MSA
 	> Created at 2024.04.16
-	> Modified at 2024.04.16
 
 ## Reference
 	> JAVA 11
@@ -18,19 +17,21 @@
 	> Port : 8443
 
 ## Last Update
-	[2024-04-18]  auth - AOP (Auto Validation), Log4j2, Encryption, Activated Spring Security (No Config)
+	[2024-04-19]  auth - MariaDB(JPA, Hikari), Jasypt, Entities
 		> jonastalk-api-gw - v.0.0.1
 		> jonastalk-discovery - v.0.0.1
-		> jonastalk-auth-api - v.0.0.3 - AOP (Auto Validation), Log4j2, Encryption, Activated Spring Security (No Config)
+		> jonastalk-auth-api - v.0.0.4 - MariaDB(JPA, Hikari), Jasypt, Entities
 		> jonastalk-chat-api - v.0.0.1
 
 
 ## jonastalk-auth-api
 	> Authentication & Authorization
-	> Encryption (RSA)
+	> Encryption (RSA, Jasypt)
 	> AOP (Auto Validation)
 	> Log4j2
+	> MariaDB (JPA, Hikari)
 	> Redis (Redisson)
+	> Lombok
 	> Swagger
 
 ## jonastalk-chat-api

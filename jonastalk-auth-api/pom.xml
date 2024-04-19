@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jonastalk</groupId>
 	<artifactId>jonastalk-auth-api</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<packaging>war</packaging>
 	<name>jonastalk-auth-api</name>
 	<description>Jonastalk Project by Jonas (KyungTaek Lim) (www.linkedin.com/in/kyungtaek-jonas-lim-software-engineer)</description>
@@ -136,6 +136,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+		
+		<!-- MariaDB JDBC -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- JPA -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<!-- jsypt ENC() -->
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 		
 	</dependencies>
 	

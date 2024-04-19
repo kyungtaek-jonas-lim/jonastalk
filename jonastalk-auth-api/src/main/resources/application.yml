@@ -46,6 +46,14 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8999/eureka
+
+
+# ================================
+# Jasypt
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password : k/hUpdMKgvyR4Hf+Sv4SRQ== # Encrypted in AES-256
     
           
 # ================================
