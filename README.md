@@ -17,15 +17,17 @@
 	> Port : 8443
 
 ## Last Update
-	[2024-04-19]  auth - MariaDB(JPA, Hikari), Jasypt, Entities
+	[2024-04-22]  auth - Spring Security, JWT, Keycloak(ongoing)
 		> jonastalk-api-gw - v.0.0.1
 		> jonastalk-discovery - v.0.0.1
-		> jonastalk-auth-api - v.0.0.4 - MariaDB(JPA, Hikari), Jasypt, Entities
+		> jonastalk-auth-api - v.0.0.5 - Spring Security, JWT, Keycloak(ongoing)
 		> jonastalk-chat-api - v.0.0.1
 
 
 ## jonastalk-auth-api
 	> Authentication & Authorization
+	> Spring Security
+	> JWT(Stateless) -> Keycloak(ongoing)
 	> Encryption (RSA, Jasypt)
 	> AOP (Auto Validation)
 	> Log4j2

@@ -47,6 +47,27 @@ spring:
       put: true
       wait-sec: 10
       lease-sec: 30
+  # --------------
+  # Register KeyCloak as an OAuth Client
+  # consider the Keycloak client as an OAuth Client. So, we need to configure the Spring Boot application to use the OAuth Client.
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: jonastalk-auth-api
+            authorization-grant-type: authorization_code
+            scope: openid # The Spring Boot application needs to interact with an OAuth 2.0 or OIDC provider to handle the actual request logic for different grant types
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9090/realms/jonastalk-auth-api
+            token-uri: http://localhost:9090/realms/jonastalk-auth-api/protocol/openid-connect/token
+            authorization-uri: http://localhost:9090/realms/jonastalk-auth-api/account
+            user-name-attribute: preferred_username # define user-name-attribute as preferred_username so as to populate our controller’s Principal with a proper user.
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/jonastalk-auth-api/protocol/openid-connect/token
+      
 
   
   

@@ -67,7 +67,7 @@ public class ApiRestConrollerAdvice implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e){
-    	
+    	e.printStackTrace();
     	HttpStatus responseStatus = null;
     	CustomExceptionResponse customExceptionResponse = null;
 

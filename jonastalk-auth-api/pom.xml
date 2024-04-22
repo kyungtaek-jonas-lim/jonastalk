@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jonastalk</groupId>
 	<artifactId>jonastalk-auth-api</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<packaging>war</packaging>
 	<name>jonastalk-auth-api</name>
 	<description>Jonastalk Project by Jonas (KyungTaek Lim) (www.linkedin.com/in/kyungtaek-jonas-lim-software-engineer)</description>

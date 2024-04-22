@@ -57,6 +57,27 @@ jasypt:
     
           
 # ================================
+# JWT
+jwt:
+  redis:
+    prefix:
+      common: "web-auth-api-gw::auth::jwt::"
+      refresh-token: "refresh::"
+      access-token: "access::"
+    key:
+      refresh:
+        value:
+          access-token: access_token # for the map value of Data#2
+          refresh-cnt: refresh_cnt # for the map value of Data#2
+  secret: random_secret_key
+  refresh-token:
+    ttl-mins: 30
+    refresh-limit: 10
+  access-token:
+    ttl-mins: 10
+    
+          
+# ================================
 # RSA
 rsa:
   filepath:
