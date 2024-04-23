@@ -32,6 +32,356 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "/redis",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"processType\" : \"GET\",\r\n    \"dataType\" : \"MAP\",\r\n    \"collectionName\" : \"collection1\",\r\n    \"key\" : \"key\",\r\n    \"value\" : \"value\",\r\n    \"key1\" : \"key1\",\r\n    \"value1\" : \"value1\",\r\n    \"key2\" : \"key2\",\r\n    \"value2\" : \"value2\",\r\n    \"ttlSec\": 30\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8002/common/redis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"common",
+										"redis"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "account",
+							"item": [
+								{
+									"name": "username/exist",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {\r\n\r\n    },\r\n    \"data\" : {\r\n        \"username\" : \"admin\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/account/username/exist",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"account",
+												"username",
+												"exist"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "token",
+							"item": [
+								{
+									"name": "access/generate",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"username\": \"root\",\r\n        \"password\": \"1234\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/token/access/generate",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"token",
+												"access",
+												"generate"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "access/refresh",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"refreshToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiUkVGUkVTSCIsImV4cCI6MTcxMzg1NzAwMiwiaWF0IjoxNzEzODU1MjAyfQ.gMlJ2kgq3MBo7ZK4M-Nqd5bDHcL_DM63q1GetnD6DXy0-vJ1z_rK67cCvuDgcTT9ta-i4DNK39MDt9oUauX2HOFiuB_N8q_q5LOfzIk0DX8dfTK7ITGHTqejh8cqMyR9Y_Kb8oUFDItHBK_hPRk9EkWLfYcxjV4uScc-SuvdCCDx4H4x0SeqMW7Fg6N_l0WMTDL0mMozeuzlB5y6mhTNukt1HrAE98i4zCnGm41BirztyWd7croLXJL7-wmiR3PWkDEn_5spkP5Gpa4k73xN_tGFp10w8x-zwFZuUzZxwGVy-t80AICNrSlpfSChrUIjqlbSwwXeyyT9xaeyxn_4QQ\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/token/access/refresh",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"token",
+												"access",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "access/validate",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"accessToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzEzODU1ODAyLCJpYXQiOjE3MTM4NTUyMDJ9.OOH3dekvknQuLuuG7IwsajtlC1d6ugWVn1ZMwU_bDpwGhrmR3BqUSgLD7ZUY-rCZde9RkrLlLCU4PFXSJMZFyZ2v_9g48yWw3UhBvi-zDQAtKmKoE8z36KkQHSfEUBLHxMhcS3kdfohgOQfWu_Zo8JhTKB9gOLQC8Uw6YLIDCJr0Nppxoc4KrK7Rjf7m5AipuodafxJPatrUqY-QT-O9HHhj3rNvN6IoEazP1CJ3NSqeqBa9NnTRBR9na_QLuk_dLQx2iEjn5XPmcTgNCWwxkX97Ty6-ge3mJfOC9ueYcMDFGtvRIvS9Rqdxtb5oyjdJEwsv8L4VXzgqLCUJGGjxgA\",\r\n        \"username\": \"root\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/token/access/validate",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"token",
+												"access",
+												"validate"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "key",
+							"item": [
+								{
+									"name": "rsa/generate",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzEzODU1ODcyLCJpYXQiOjE3MTM4NTUyNzJ9.BglXnb4E9MCVGiaSJmo1jVupRfJaWrg2W3NID91YWAA9nhzAXDbV84EYPENT1-HwM11rscFsXjc041hJmaOhgr_nxiLmNuWz_kCnOOPbTsc8wpkw7Y8VXQ3dBV3HCxn50MTJJPn-nDnD7iq5cuYcl_CN_j8crUVfIvdVfrcCar7VV23Iq2wTIweuTYA2iE3e0hFhZtouXu5rfr2qG2tNj7KNurQWZeTMs9UoUgopHKRqLMNK53rQnjqBdLZ7wP1ObSW1zqHgf1L1J1LufdeF-ja2WhBV1xXxEIb-0Me0l5IAociy__LioymX91n8sEe0cG7E3ckKbQtNmUDymsIcNg",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"purpose\": \"password\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/key/rsa/generate",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"key",
+												"rsa",
+												"generate"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "rsa/read",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzEzODU1ODcyLCJpYXQiOjE3MTM4NTUyNzJ9.BglXnb4E9MCVGiaSJmo1jVupRfJaWrg2W3NID91YWAA9nhzAXDbV84EYPENT1-HwM11rscFsXjc041hJmaOhgr_nxiLmNuWz_kCnOOPbTsc8wpkw7Y8VXQ3dBV3HCxn50MTJJPn-nDnD7iq5cuYcl_CN_j8crUVfIvdVfrcCar7VV23Iq2wTIweuTYA2iE3e0hFhZtouXu5rfr2qG2tNj7KNurQWZeTMs9UoUgopHKRqLMNK53rQnjqBdLZ7wP1ObSW1zqHgf1L1J1LufdeF-ja2WhBV1xXxEIb-0Me0l5IAociy__LioymX91n8sEe0cG7E3ckKbQtNmUDymsIcNg",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"purpose\": \"password\"\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8002/v1/key/rsa/read",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8002",
+											"path": [
+												"v1",
+												"key",
+												"rsa",
+												"read"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "test",
+					"item": [
+						{
+							"name": "current-time",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/test/current-time",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"test",
+										"current-time"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "chatTest",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8002/test/chatTest",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"test",
+										"chatTest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "secured",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzEzODU1ODAyLCJpYXQiOjE3MTM4NTUyMDJ9.OOH3dekvknQuLuuG7IwsajtlC1d6ugWVn1ZMwU_bDpwGhrmR3BqUSgLD7ZUY-rCZde9RkrLlLCU4PFXSJMZFyZ2v_9g48yWw3UhBvi-zDQAtKmKoE8z36KkQHSfEUBLHxMhcS3kdfohgOQfWu_Zo8JhTKB9gOLQC8Uw6YLIDCJr0Nppxoc4KrK7Rjf7m5AipuodafxJPatrUqY-QT-O9HHhj3rNvN6IoEazP1CJ3NSqeqBa9NnTRBR9na_QLuk_dLQx2iEjn5XPmcTgNCWwxkX97Ty6-ge3mJfOC9ueYcMDFGtvRIvS9Rqdxtb5oyjdJEwsv8L4VXzgqLCUJGGjxgA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authentication-Method",
+										"value": "KEYCLOAK",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8002/test/secured",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8002",
+									"path": [
+										"test",
+										"secured"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}

@@ -1,0 +1,41 @@
+# Redis Structure for JWT
+	> Structure
+		|- Data#1		-	Key : {spring.application.name}::auth::jwt::refresh::{Refresh Token}
+							Value : Map
+								- access_token : {Access Token}
+								- refresh_cnt : {Refresh Token Count}
+						-	TTL :  Refresh Token Expiration
+							
+		|- Data#2		- 	Key : {spring.application.name}::auth::jwt::access::{Access Token}
+							Value : {Refresh Token}
+						-	TTL :  Access Token Expiration
+
+	> Scenario
+		#1> Issue Token API
+			1) Issue Access Token and Refresh Token
+			2) (Redis) Create a new Data#1 and Data#2
+		
+		#2> Refresh Token API (only one valid access token per refresh token)
+			1) Refresh Token Validation
+			2) (Redis) Select Refresh Token (from Data #1)
+				- Check for existence
+				- Check `refresh_cnt` is over the configuration value (if so, errror response with an error code, meaing too many refresh token request
+			3) (Redis) Delete Existing Data#2 (if exists)
+			4) Issue Access Token
+			5) (Redis) Create a new Data#2 (New Access Token)
+			6) (Redis) Update Data#1 Value
+				- Update `access_token` with the new `access_token`
+				- refresh_cnt++
+			
+		#3> Authorization (OncePerRequestFilter) (only one valid access token per refresh token)
+			1) Validate Access Token
+			2) (Redis) Select Data#2
+				- Check for existence
+			3) (Redis) Select Data#1
+				- Check if they match
+				- if not, errror response with an error code, meaing invalid access token
+				
+		#4> Logout
+			1) Get Refresh Token from Data#2 with Access Token
+			2) Remove Data#2
+			3) Remove Data#1

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jonastalk.common.component.JonasTimeUtil;
 import com.jonastalk.common.consts.EnumErrorCode;
 import com.jonastalk.common.exception.CustomException;
+import com.jonastalk.common.feign.ChatFeignClient;
 
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
@@ -33,9 +35,12 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/test")
 @ApiIgnore
 public class TestController {
+	
+	@Autowired
+	ChatFeignClient chatFeignClient;
     
 	/**
-	 * @name getSecuredEndpoint(@RequestBody Map<String, Object> param)
+	 * @name getSecuredEndpoint(@RequestBody(required = false) Map<String, Object> param)
 	 * @brief Secured endpoint accessible only to authenticated users with a specific role
 	 * @author Jonas Lim
 	 * @date 2023.12.01
@@ -53,7 +58,7 @@ public class TestController {
 
     
 	/**
-	 * @name getCurrentTime(@RequestBody Map<String, Object> param)
+	 * @name getCurrentTime(@RequestBody(required = false) Map<String, Object> param)
 	 * @brief Get Current Time
 	 * @author Jonas Lim
 	 * @date 2023.12.05
@@ -104,6 +109,24 @@ public class TestController {
 		response.put("format", 								format);
     	
 		return ResponseEntity.ok(response);
+    }
+
+    
+	/**
+	 * @name chatTest(@RequestBody(required = false) Map<String, Object> param)
+	 * @brief Chat Test (Feign Client)
+	 * @author Jonas Lim
+	 * @date 2024.04.22
+	 * @param param
+     * @return
+	 */
+    @PostMapping("/chatTest")
+    @Consumes(MediaType.APPLICATION_JSON_VALUE)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "This endpoint is ignored by Swagger")
+    @ApiIgnore
+    public ResponseEntity<?> chatTest(@RequestBody(required = false) Map<String, Object> param) {
+    	return chatFeignClient.chatTest();
     }
 
 }

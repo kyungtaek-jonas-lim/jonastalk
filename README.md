@@ -17,10 +17,18 @@
 	> Port : 8443
 
 ## Last Update
-	[2024-04-22]  auth - Spring Security, JWT, Keycloak(ongoing)
+	[2024-04-23]  auth - API, Feign Client
 		> jonastalk-api-gw - v.0.0.1
 		> jonastalk-discovery - v.0.0.1
-		> jonastalk-auth-api - v.0.0.5 - Spring Security, JWT, Keycloak(ongoing)
+		> jonastalk-auth-api - v.0.0.6 - API, Feign Client
+			** API
+				- /v1/account/username/exist
+				- /v1/token/access/generate
+				- /v1/token/access/refresh
+				- /v1/token/access/validate
+				- /v1/key/rsa/generate
+				- /v1/key/rsa/read
+				- /test/chatTest
 		> jonastalk-chat-api - v.0.0.1
 
 
@@ -34,6 +42,7 @@
 	> MariaDB (JPA, Hikari)
 	> Redis (Redisson)
 	> Lombok
+	> Feign Client
 	> Swagger
 
 ## jonastalk-chat-api

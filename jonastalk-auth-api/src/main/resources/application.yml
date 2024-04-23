@@ -46,6 +46,14 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8999/eureka
+      
+      
+# ================================
+# Feign Client
+jonastalk-chat-api:
+  ribbon:
+    ReadTimeout: 5000
+    ConnectTimeout: 3000
 
 
 # ================================
@@ -61,7 +69,7 @@ jasypt:
 jwt:
   redis:
     prefix:
-      common: "web-auth-api-gw::auth::jwt::"
+      common: "jonastalk-auth-api::auth::jwt::"
       refresh-token: "refresh::"
       access-token: "access::"
     key:
@@ -95,9 +103,21 @@ rsa:
 logging:
   file:
     path: ./logs
-    name: web-auth-api-gw.log
+    name: jonastalk-auth-api.log
     max-history: 30
   pattern:
     file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:line - %line] - %msg%n"
     console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method - %line] - %msg%n"
     rolling-file-name: "./logs/web-blog-jonaslog.%d{yyyy-MM-dd}.%i"
+    
+
+## ================================ 
+# Springfox - Swagger & MVC  
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true  # Enable Swagger UI
+    version: 3.0.0  # SpringFox version
+  springfox:
+    documentation:
+      enabled: true  # Enable SpringFox documentation
