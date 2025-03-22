@@ -73,6 +73,3 @@ Follow these instructions to set up your development environment.
 - `jonastalk-chat-api`
 	- `Kafka` for reliable message delivery
 	<!-- - `Redis` Pub/Sub for real-time notifications. -->
-
-## APIs
-	- 
