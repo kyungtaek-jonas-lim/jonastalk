@@ -11,6 +11,8 @@
 - Web Chat Application
 - MSA
 - Created at 2024.04.16
+- System Design
+	- ![System Design Diagram](https://raw.githubusercontent.com/kyungtaek-jonas-lim/jonastalk/main/system_design_jonastalk.png)
 
 ## Reference
 - JAVA 11
@@ -69,3 +71,8 @@ Follow these instructions to set up your development environment.
 	- Swagger
 
 - `jonastalk-chat-api`
+	- `Kafka` for reliable message delivery
+	<!-- - `Redis` Pub/Sub for real-time notifications. -->
+
+## APIs
+	- 
