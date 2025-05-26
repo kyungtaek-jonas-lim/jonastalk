@@ -18,6 +18,8 @@ spring:
   # --------------
   # MVC
   mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER # For Swagger
     static-locations: /resources/**
     view:
       prefix: /WEB-INF/chat/
@@ -41,3 +43,24 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8999/eureka
+  
+  
+# ================================ 
+# Logging
+logging:
+  file:
+    path: ./logs
+    name: jonastalk-chat-api.log
+    max-history: 30
+  pattern:
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:line - %line] - %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method - %line] - %msg%n"
+    rolling-file-name: "./logs/jonastalk-chat-api.%d{yyyy-MM-dd}.%i"
+
+
+# ================================
+# Feign Client
+jonastalk-auth-api:
+  ribbon:
+    ReadTimeout: 5000
+    ConnectTimeout: 3000
