@@ -108,7 +108,7 @@ logging:
   pattern:
     file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:line - %line] - %msg%n"
     console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method - %line] - %msg%n"
-    rolling-file-name: "./logs/web-blog-jonaslog.%d{yyyy-MM-dd}.%i"
+    rolling-file-name: "./logs/jonastalk-auth-api.%d{yyyy-MM-dd}.%i"
     
 
 ## ================================ 
