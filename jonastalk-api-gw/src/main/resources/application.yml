@@ -31,6 +31,19 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: jonastalk-chat-ws
+          uri: lb:ws://jonastalk-chat-api
+          predicates:
+            - Path=/chat/**
+          filters:
+            - name: CustomFilter
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/chat/(?<segment>.*), /$\{segment}
+            - name: LoggingFilter
+              args:
+                message: jonastalk-chat-api
+                showPreLogger: true
+                showPostLogger: true
         - id: jonastalk-chat-api
           uri: lb://jonastalk-chat-api
           predicates:

@@ -25,12 +25,6 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		
-		<!-- Spring Boot Web -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		
 		<!-- Spring Cloud Eureka -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -43,13 +37,6 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
-		
-		<!-- Spring Boot Tomcat -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		
 		<!-- Spring Boot Test -->
@@ -79,6 +66,12 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		
+		<!-- Spring WebFlux (Netty) -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-webflux</artifactId>
+	    </dependency>
 		
 	</dependencies>
 	
