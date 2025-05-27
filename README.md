@@ -36,23 +36,39 @@ Follow these instructions to set up your development environment.
 
 2. **Setup Environment:**
 	- Install Library
-		```bash
-		cd jonastalk-api-discovery
-		./mvnw clean install
-		./mvnw spring-boot:run
+		1. Common
+			```bash
+			cd jonastalk-api-discovery
+			./mvnw clean install
+			./mvnw spring-boot:run
 
-		cd jonastalk-api-gw
-		./mvnw clean install
-		./mvnw spring-boot:run
+			cd jonastalk-api-gw
+			./mvnw clean install
+			./mvnw spring-boot:run
 
-		cd jonastalk-auth-api
-		./mvnw clean install
-		./mvnw spring-boot:run
+			cd jonastalk-auth-api
+			./mvnw clean install
+			./mvnw spring-boot:run
 
-		cd jonastalk-chat-api
-		./mvnw clean install
-		./mvnw spring-boot:run
-		```
+			cd jonastalk-chat-api
+			./mvnw clean install
+			./mvnw spring-boot:run
+			```
+		2. Windows
+			```cmd
+			cd jonastalk-api-discovery
+			.\run.bat
+
+			cd jonastalk-api-gw
+			.\run.bat
+
+			cd jonastalk-auth-api
+			.\run.bat
+
+			cd jonastalk-chat-api
+			.\run.bat
+			```
+
 	- Postman Import
 		- `./Jonastalk.postman_collection.json`
 

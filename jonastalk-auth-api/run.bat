@@ -1,0 +1,6 @@
+@echo off
+echo Cleaning and building project...
+call .\mvnw clean install
+
+echo Running Spring Boot application...
+call .\mvnw spring-boot:run
