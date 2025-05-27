@@ -26,11 +26,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	 * @name registerWebSocketHandlers
 	 * @author Jonas Lim
 	 * @date May 26, 2025
-	 * @brief This method registers the WebSocket endpoint("/ws/chat") that clients will use to connect.
+	 * @brief This method registers the WebSocket endpoint("/v1/chat") that clients will use to connect.
 	 */
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatWebSocketHandler, "/ws/chat")
+        registry.addHandler(chatWebSocketHandler, "/v1/chat")
                 .setAllowedOriginPatterns("*");
     }
 }

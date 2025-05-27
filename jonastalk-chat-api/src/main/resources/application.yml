@@ -64,3 +64,11 @@ jonastalk-auth-api:
   ribbon:
     ReadTimeout: 5000
     ConnectTimeout: 3000
+
+
+# ================================
+# Jasypt
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password : k/hUpdMKgvyR4Hf+Sv4SRQ== # Encrypted in AES-256

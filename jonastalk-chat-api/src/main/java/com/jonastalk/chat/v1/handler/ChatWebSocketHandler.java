@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.jonastalk.chat.v1.api.field.WebsocketConnectionRequest;
 import com.jonastalk.common.feign.AuthFeignClient;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
          Map<String, String> data = getDataFromQuery(session);
          
-        if (data == null || !isTokenValid(data.get("accessToken"), data.get("username"))) {
+         
+         
+        if (data == null || !isTokenValid(data.get(WebsocketConnectionRequest.ACCESS_TOKEN.getName()), data.get(WebsocketConnectionRequest.USERNAME.getName()))) {
             log.warn("Invalid or missing token. Closing session.");
             session.close(CloseStatus.NOT_ACCEPTABLE);
             return;
@@ -44,8 +47,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private boolean isTokenValid(String token, String username) {
         try {
             Map<String, Object> data = new HashMap<>();
-            data.put("accessToken", token);
-            data.put("username", username);
+            data.put(WebsocketConnectionRequest.ACCESS_TOKEN.getName(), token);
+            data.put(WebsocketConnectionRequest.USERNAME.getName(), username);
 
             Map<String, Object> request = new HashMap<>();
             request.put("common", new HashMap<>());
@@ -75,7 +78,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if (query != null) {
             for (String param : query.split("&")) {
                 String[] pair = param.split("=");
-                if (pair.length == 2 && ("accessToken".equals(pair[0]) || "username".equals(pair[0])) ) {
+                if (pair.length == 2 && (WebsocketConnectionRequest.ACCESS_TOKEN.getName().equals(pair[0]) || WebsocketConnectionRequest.USERNAME.getName().equals(pair[0])) ) {
                 	result.put(pair[0], pair[1]);
                 }
             }
