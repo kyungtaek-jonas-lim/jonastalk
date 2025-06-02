@@ -72,3 +72,18 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     password : k/hUpdMKgvyR4Hf+Sv4SRQ== # Encrypted in AES-256
+
+
+# ================================
+# WebSocket 
+ws:
+  redis:
+    prefix:
+      common: "jonastalk-chat-api::ws::"
+      chat: "chat::"
+    #key:
+      #chat:
+        #value:
+          #session: session
+  chat:
+    ttl-mins: 5
