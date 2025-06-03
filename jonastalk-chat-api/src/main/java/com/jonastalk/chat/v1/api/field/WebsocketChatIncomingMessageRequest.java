@@ -6,28 +6,37 @@ import com.jonastalk.common.consts.EnumApiParamType;
 import lombok.Getter;
 
 /**
- * @name WebsocketConnectionRequest.java
- * @brief Websocket Connection Request Data
+ * @name WebsocketChatIncomingMessageRequest.java
+ * @brief Websocket Chat Incoming Message Request Data
  * @author Jonas Lim
- * @date 2025.05.27
+ * @date June 3, 2025
  */
 @Getter
-public enum WebsocketConnectionRequest implements IRequestParam {
+public enum WebsocketChatIncomingMessageRequest implements IRequestParam {
 
-	USERNAME
-		("username",
-			"Username",
+	TYPE
+		("type",
+			"Type",
 			EnumApiParamType.STRING,
-			50,
+			10,
 			true,
 			null,
 			null
 		)
-	,ACCESS_TOKEN
-		("accessToken",
-			"Access Token",
-			EnumApiParamType.STRING,
+	,TO_USER_IDS
+		("toUserIds",
+			"ToUserIds",
+			EnumApiParamType.OBJECT_ARRAY,
 			-1,
+			true,
+			null,
+			null
+		)
+	,MESSAGE
+		("message",
+			"Message",
+			EnumApiParamType.STRING,
+			1000,
 			true,
 			null,
 			null
@@ -44,7 +53,7 @@ public enum WebsocketConnectionRequest implements IRequestParam {
 	private Object defaultValue;
 	private Object[] validationValues;
 	
-	private WebsocketConnectionRequest(String name, String explanation, EnumApiParamType type, int maxLength, boolean required, Object defaultValue, Object[] validationValues) {
+	private WebsocketChatIncomingMessageRequest(String name, String explanation, EnumApiParamType type, int maxLength, boolean required, Object defaultValue, Object[] validationValues) {
 		this.name				= name;
 		this.explanation 		= explanation;
 		this.type 				= type;
@@ -56,6 +65,6 @@ public enum WebsocketConnectionRequest implements IRequestParam {
 
 	@Override
 	public IRequestParam[] getValues() {
-		return WebsocketConnectionRequest.values();
+		return WebsocketChatIncomingMessageRequest.values();
 	}
 }

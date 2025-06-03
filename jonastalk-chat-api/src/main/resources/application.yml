@@ -81,9 +81,5 @@ ws:
     prefix:
       common: "jonastalk-chat-api::ws::"
       chat: "chat::"
-    #key:
-      #chat:
-        #value:
-          #session: session
-  chat:
-    ttl-mins: 5
+    ttl-secs:
+      chat: 6000 # 10 mins
