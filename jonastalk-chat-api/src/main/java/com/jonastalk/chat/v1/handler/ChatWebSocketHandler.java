@@ -1,6 +1,8 @@
 package com.jonastalk.chat.v1.handler;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,9 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jonastalk.chat.v1.api.field.WebsocketChatIncomingMessageRequest;
 import com.jonastalk.chat.v1.api.field.WebsocketChatOutgoingMessageResponse;
 import com.jonastalk.chat.v1.api.field.WebsocketConnectionRequest;
+import com.jonastalk.common.component.RedisPublisher;
+import com.jonastalk.common.component.RedisSubscriberManager;
 import com.jonastalk.common.component.ValidationComponent;
 import com.jonastalk.common.feign.AuthFeignClient;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -43,6 +48,28 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	@Autowired
 	ValidationComponent validationComponent;
+	
+	@Autowired
+	RedisSubscriberManager redisSubscriberManager;
+	
+	@Autowired
+	RedisPublisher redisPublisher;
+	
+    /**
+	 * @name WebsocketMessageType
+	 * @brief WebSocket Message Type
+	 * @author Jonas Lim
+	 * @date June 3, 2025
+     */
+    @Getter
+    public enum WebsocketMessageType {
+    	CHAT					("chat")
+    	;
+    	private String value;
+    	private WebsocketMessageType(String value) {
+    		this.value = value;
+    	}
+    }
 
     /**
      * @brief Connection Establish Callback
@@ -74,7 +101,27 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             log.error("WebSocket connection fail: username: {}, sessionId: {}, savedSession: {}", username, sessionId, savedSession);
             return;
         }
-        log.info("WebSocket connected: username: {}, sessionId: {}, savedSession: {}", username, sessionId, savedSession);
+        
+        // Subscribe Redis Chat Channel
+        boolean subscribedRedisChatChannel = false;
+        final String channelName = RedisSubscriberManager.RedisPubSubChannel.CHAT.getValue() + username;
+    	if (redisSubscriberManager.getChannels() == null || !redisSubscriberManager.getChannels().contains(channelName)) { // If it doesn't subscribe, subscribe the channel
+    		subscribedRedisChatChannel = redisSubscriberManager.subscribe(channelName, (channel, msg) -> {
+    	        final Set<String> sessionIds = chatWebSocketConnectionManager.getChatWebSocketSessionIdsByUsername(username);
+    	        for (String sid: sessionIds) {
+    	        	final WebSocketSession toSession = webSocketSessionStore.get(sid);
+    	        	if (toSession != null && toSession.isOpen()) {
+    	        		try {
+							toSession.sendMessage(new TextMessage(msg));
+						} catch (IOException e) {
+							log.error("WebSocket message send failed. sessionId={}, message={}", toSession.getId(), msg, e);
+						}
+    	        	}
+    	        }
+    		});
+    	}
+        
+        log.info("WebSocket connected: username: {}, sessionId: {}, savedSession: {}, subscribedRedisChatChannel: {}", username, sessionId, savedSession, subscribedRedisChatChannel);
     }
     
     /**
@@ -98,8 +145,29 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         
         // Delete Session
         final String username = chatWebSocketConnectionManager.getChatWebSocketUsernameBySessionId(sessionId);
-        chatWebSocketConnectionManager.deleteChatWebSocketSession(username, sessionId); // Redis Delete
+        final boolean deletedSession = chatWebSocketConnectionManager.deleteChatWebSocketSession(username, sessionId); // Redis Delete
         webSocketSessionStore.remove(sessionId); // Local Delete
+        
+        // Unsubscribe Redis Chat Channel
+        boolean unsubscribedRedisChatChannel = false;
+        final String channelName = RedisSubscriberManager.RedisPubSubChannel.CHAT.getValue() + username;
+    	if (redisSubscriberManager.getChannels() != null || redisSubscriberManager.getChannels().contains(channelName)) {
+    		Set<String> sessionIds = chatWebSocketConnectionManager.getChatWebSocketSessionIdsByUsername(username);
+    		boolean readyToUnsubscribe = true; // Unsubscribe if this service doesn't have the valid sessions for the user
+    		if (sessionIds != null) {
+    			for (String sid: sessionIds) {
+    				if (webSocketSessionStore.get(sid) != null) {
+    					readyToUnsubscribe = false;
+    					break;
+    				}
+    			}
+    		}
+    		if (readyToUnsubscribe) {
+    			unsubscribedRedisChatChannel = redisSubscriberManager.unsubscribe(channelName);
+    		}
+    	}
+        
+        log.info("WebSocket disconnected: username: {}, sessionId: {}, deletedSession: {}, unsubscribedRedisChatChannel: {}", username, sessionId, deletedSession, unsubscribedRedisChatChannel);
     }
 
     /**
@@ -131,7 +199,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             }
             return false;
         } catch (Exception e) {
-            log.error("Token validation failed: {}", e.getMessage());
+            log.error("Token validation failed: {}", e.getMessage(), e);
             return false;
         }
     }
@@ -179,47 +247,41 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
          */
         // Process incoming message
     	final String incomingMessage = message.getPayload();
-        log.info("Received message: {}", incomingMessage);
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> messageMap = objectMapper.readValue(incomingMessage, Map.class);
         validationComponent.validateApiRequestData(messageMap, WebsocketChatIncomingMessageRequest.TYPE);
         
+        // Chat
+        if (WebsocketMessageType.CHAT.getValue().equals( ((String)messageMap.get(WebsocketChatIncomingMessageRequest.TYPE.getName())).toLowerCase() )) {
+            final String fromUserId = chatWebSocketConnectionManager.getChatWebSocketUsernameBySessionId(session.getId());
+            log.info("[RECEIVED] chat message to send: {'{}'} -> {'{}'}, message: {}", fromUserId, String.join("','", (List) messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName()) ), incomingMessage);
         
-        // Save message to database
-        
-        
-
-        /*
-         * Example of outgoing message
-			{
-			  "type": "chat",
-			  "fromUserId": "df8123a8-df9a-4a8f-b29f-7d8cb3d7d123", // Normally it's userId like UUID, but currently it's username
-			  "message": "Hello"
-			}
-         */
-        // Process outgoing message
-        final List<String> toUserIds = (List)messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
-        messageMap.remove(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
-        final String fromUserId = chatWebSocketConnectionManager.getChatWebSocketUsernameBySessionId(session.getId());
-        messageMap.put(WebsocketChatOutgoingMessageResponse.FROM_USER_ID.getName(), fromUserId);
-        final String outgoingMessage = objectMapper.writeValueAsString(messageMap);
-        
-        
-        // Publish to the type channel
-        
-        
-        
-        
-        // TO BE DELETED - should be in the subscribe handling code
-        for (String toUserId: toUserIds) {
-	        final Set<String> sessionIds = chatWebSocketConnectionManager.getChatWebSocketSessionIdsByUsername(toUserId);
-	        for (String sessionId: sessionIds) {
-	        	final WebSocketSession toSession = webSocketSessionStore.get(sessionId);
-	        	if (toSession != null && toSession.isOpen()) {
-	        		toSession.sendMessage(new TextMessage(outgoingMessage));
-	        	}
+	        
+	        // Save message to database
+	        
+	        
+	
+	        /*
+	         * Example of outgoing message
+				{
+				  "type": "chat",
+				  "fromUserId": "df8123a8-df9a-4a8f-b29f-7d8cb3d7d123", // Normally it's userId like UUID, but currently it's username
+				  "message": "Hello"
+				}
+	         */
+	        // Process outgoing message
+	        final List<String> toUserIdsList = (List)messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
+	        Set<String> toUserIds = new HashSet<>(toUserIdsList);
+	        messageMap.remove(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
+	        messageMap.put(WebsocketChatOutgoingMessageResponse.FROM_USER_ID.getName(), fromUserId);
+	        final String outgoingMessage = objectMapper.writeValueAsString(messageMap);
+	        
+	        
+	        // Publish to the type channel
+	        for (String toUserId: toUserIds) {
+	            final String channelName = RedisSubscriberManager.RedisPubSubChannel.CHAT.getValue() + toUserId;
+	            redisPublisher.publish(channelName, outgoingMessage);
 	        }
         }
-        session.sendMessage(new TextMessage("[Echo] " + message.getPayload())); // Test code
     }
 }
