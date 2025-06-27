@@ -49,11 +49,13 @@ public class ChatParticipantListEntity {
     @ApiModelProperty(notes = "Chat Room Identifier")
     private String chatId;
 
-    @Column(name = "ENTRANCE_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "ENTRANCE_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Entrance Datetime")
     private LocalDateTime entranceDatetime;
 
-    @Column(name = "LAST_PARTICIPATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "LAST_PARTICIPATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Last Participation Datetime")
     private LocalDateTime lastParticipationDatetime;
 

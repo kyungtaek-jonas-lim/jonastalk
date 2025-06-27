@@ -44,7 +44,8 @@ public class ChatPhotoRelationEntity {
     @ApiModelProperty(notes = "URL of the Chat Room Photo (S3 or other storage)")
     private String photoUrl;
 
-    @Column(name = "REGISTRATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Photo Registration Datetime")
     private LocalDateTime registrationDatetime;
 }

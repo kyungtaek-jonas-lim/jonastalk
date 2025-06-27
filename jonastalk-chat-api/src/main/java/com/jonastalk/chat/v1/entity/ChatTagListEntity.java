@@ -49,7 +49,8 @@ public class ChatTagListEntity {
     @ApiModelProperty(notes = "Tag")
     private String tag;
 
-    @Column(name = "REGISTRATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Tag Registration Datetime")
     private LocalDateTime registrationDatetime;
 }

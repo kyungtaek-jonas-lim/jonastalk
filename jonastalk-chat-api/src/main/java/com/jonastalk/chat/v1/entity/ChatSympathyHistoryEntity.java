@@ -56,7 +56,8 @@ public class ChatSympathyHistoryEntity {
     @ApiModelProperty(notes = "User Identifier")
     private String userId;
 
-    @Column(name = "REGISTRATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Sympathy Registration Datetime")
     private LocalDateTime registrationDatetime;
 

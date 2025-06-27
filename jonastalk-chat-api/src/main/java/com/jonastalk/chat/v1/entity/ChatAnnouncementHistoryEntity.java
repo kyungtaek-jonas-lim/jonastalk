@@ -39,7 +39,8 @@ public class ChatAnnouncementHistoryEntity {
     private String chatId;
 
     @Id
-    @Column(name = "REGISTRATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Announcement Registration Datetime")
     private LocalDateTime registrationDatetime;
 

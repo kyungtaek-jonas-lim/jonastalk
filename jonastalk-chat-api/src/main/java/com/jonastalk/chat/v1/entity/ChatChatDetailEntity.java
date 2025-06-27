@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
         @Index(name = "idx_chat_chat_d_n03", columnList = "INVITATION_LINK")
     }
 )
-@ApiModel(description = "Chat Room Detail")
+@ApiModel(description = "Chat Detail")
 public class ChatChatDetailEntity {
 
     @Id
@@ -45,7 +45,8 @@ public class ChatChatDetailEntity {
     @ApiModelProperty(notes = "User ID who created the chat room")
     private String creatorUserId;
 
-    @Column(name = "CREATER_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "CREATER_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Chat Room Creation Datetime")
     private LocalDateTime creationDatetime;
 
@@ -53,7 +54,8 @@ public class ChatChatDetailEntity {
     @ApiModelProperty(notes = "Current Chat Room Manager User ID")
     private String chatManagerUserId;
 
-    @Column(name = "CHAT_MANAGER_MODIFICATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "CHAT_MANAGER_MODIFICATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Datetime when the chat manager was last changed")
     private LocalDateTime chatManagerModificationDatetime;
 
@@ -61,7 +63,8 @@ public class ChatChatDetailEntity {
     @ApiModelProperty(notes = "Chat Room Type Code")
     private String chatTypeCode;
 
-    @Column(name = "CHAT_INFO_MODIFICATION_DATETIME", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "CHAT_INFO_MODIFICATION_DATETIME", nullable = false,
+    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Datetime when the chat room info was last modified")
     private LocalDateTime chatInfoModificationDatetime;
 
