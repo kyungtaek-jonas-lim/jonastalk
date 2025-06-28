@@ -14,16 +14,17 @@ import lombok.Getter;
 @Getter
 public enum TokenAccessValidateRequest implements IRequestParam {
 
-	USERNAME
-		("username",
-			"Username",
-			EnumApiParamType.STRING,
-			50,
-			true,
-			null,
-			null
-		)
-	,ACCESS_TOKEN
+//	USERNAME
+//		("username",
+//			"Username",
+//			EnumApiParamType.STRING,
+//			50,
+//			true,
+//			null,
+//			null
+//		)
+//	,
+	ACCESS_TOKEN
 		("accessToken",
 			"Access Token",
 			EnumApiParamType.STRING,

@@ -1,6 +1,8 @@
 package com.jonastalk.auth.v1.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -108,7 +111,7 @@ public class AccountService {
 	   	// ----------------------
     	// 1. Get Params
     	// ----------------------
-    	final String username = (String) param.get(TokenAccessValidateRequest.USERNAME.getName());
+//    	final String username = (String) param.get(TokenAccessValidateRequest.USERNAME.getName());
     	final String accessToken = (String) param.get(TokenAccessValidateRequest.ACCESS_TOKEN.getName());
     	
     	
@@ -120,21 +123,36 @@ public class AccountService {
 		// 2-1) Validate
     	boolean validation = false;
         String usernameFromAccessToken = jwtTokenUtil.extractUsername(accessToken);
-        if (username.equals(usernameFromAccessToken)) {
+        if (!StringUtils.hasText(usernameFromAccessToken)) {
+        	throw new CustomException(EnumErrorCode.ERR005);
+        }
+//        if (username.equals(usernameFromAccessToken)) {
+        UserDetails userDetails = null;
         	try {
-        		validation = (jwtTokenUtil.validateAccessTokenWithRedis(accessToken) != null);
+        		userDetails = jwtTokenUtil.validateAccessTokenWithRedis(accessToken);
+        		validation = (userDetails != null);
 			} catch (ExpiredJwtException e) {
 				throw new CustomException(EnumErrorCode.ERR004);
 			} catch (JwtException e) {
 				throw new CustomException(EnumErrorCode.ERR005);
 			}
-        }
+//        }
+
+
+		// --------------
+		// 2-2) Get Roles
+        List<String> roles = new ArrayList<>();
+    	for (GrantedAuthority authority : userDetails.getAuthorities()) {
+    		roles.add(authority.getAuthority());
+    	}
 		
     	// ----------------------
     	// 3. Response
     	// ----------------------
     	Map<String, Object> response = new HashMap<>();
     	response.put(TokenAccessValidateResponse.VALIDATION.getName(), validation);
+    	response.put(TokenAccessValidateResponse.USERNAME.getName(), usernameFromAccessToken);
+    	response.put(TokenAccessValidateResponse.ROLES.getName(), roles);
 		return response;
 	}
     

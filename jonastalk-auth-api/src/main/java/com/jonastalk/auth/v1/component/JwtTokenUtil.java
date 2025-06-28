@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.jonastalk.auth.v1.details.UserDetailsImpl;
 import com.jonastalk.auth.v1.service.CustomUserDetailsService;
 import com.jonastalk.common.component.CommonUtilComponent;
 import com.jonastalk.common.component.EncryptionComponent;
@@ -172,10 +173,10 @@ public class JwtTokenUtil {
             if (encryptionComponent.isExistsRsaKey(EncryptionComponent.RsaPurpose.JWT)) {
                 PublicKey publicKey = encryptionComponent.getRsaPublicKey(EncryptionComponent.RsaPurpose.JWT);
                 claims = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
-                tokenType = (String) claims.get("tokenType");
+                tokenType = (String) claims.get(ClaimParams.TokenType.getValue());
             } else {
             	claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-                tokenType = (String) claims.get("tokenType");
+                tokenType = (String) claims.get(ClaimParams.TokenType.getValue());
             }
             // Validate the token type
             if (tokenType != null && tokenType.equals(expectedTokenType.name())) {

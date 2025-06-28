@@ -29,7 +29,7 @@ public enum AllValidationRequestURI {
 	,KEY_RSA_READ_REQUEST				(KeyRsaReadRequest.REQUEST_URI,						KeyRsaReadRequest.PURPOSE,					ConrollerParamType.MAP_COMMON_DATA)
 	
 	,TOKEN_ACCESS_GENERATE_REQUEST		(TokenAccessGenerateRequest.REQUEST_URI,			TokenAccessGenerateRequest.USERNAME,		ConrollerParamType.MAP_COMMON_DATA)
-	,TOKEN_ACCESS_VALIDATE_REQUEST		(TokenAccessValidateRequest.REQUEST_URI,			TokenAccessValidateRequest.USERNAME,		ConrollerParamType.MAP_COMMON_DATA)
+	,TOKEN_ACCESS_VALIDATE_REQUEST		(TokenAccessValidateRequest.REQUEST_URI,			TokenAccessValidateRequest.ACCESS_TOKEN,	ConrollerParamType.MAP_COMMON_DATA)
 	,TOKEN_REFRESH_GENERATE_REQUEST		(TokenAccessRefreshRequest.REQUEST_URI,				TokenAccessRefreshRequest.REFRESH_TOKEN,	ConrollerParamType.MAP_COMMON_DATA)
 	;
 	

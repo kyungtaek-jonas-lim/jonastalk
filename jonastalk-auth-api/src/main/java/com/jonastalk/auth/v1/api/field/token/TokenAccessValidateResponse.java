@@ -19,6 +19,16 @@ public enum TokenAccessValidateResponse implements IResponseParam {
 			"Validation",
 			EnumApiParamType.BOOLEAN
 		)
+	,USERNAME
+		("username",
+				"Username",
+				EnumApiParamType.STRING
+				)
+	,ROLES
+		("roles",
+				"Roles",
+				EnumApiParamType.OBJECT_ARRAY
+				)
 	;
 
 	private String name;
