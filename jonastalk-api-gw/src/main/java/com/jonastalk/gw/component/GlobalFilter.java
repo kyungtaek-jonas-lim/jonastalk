@@ -31,8 +31,12 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
     public GlobalFilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
         this.webClient = webClientBuilder.baseUrl("http://localhost:8002/").build(); // Auth Service Base Url
-        authServiceBaseUrls.add("http://localhost:8002/"); // TO BE IN Config Files
-        authServiceBaseUrls.add("http://localhost:8443/auth"); // TO BE IN Config Files
+        
+		/**
+		 * @TODO In Config Files
+		 */
+        authServiceBaseUrls.add("http://localhost:8002/");
+        authServiceBaseUrls.add("http://localhost:8443/auth");
     }
     
     @Override
@@ -101,7 +105,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
 
                     ServerHttpRequest mutatedRequest = request.mutate()
                         .header("X-User-Id", username)
-                        .header("X-User-Role", roles)
+                        .header("X-User-Roles", roles)
                         .build();
 
                     ServerWebExchange mutatedExchange = exchange.mutate()
