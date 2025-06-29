@@ -23,6 +23,8 @@ public enum EnumErrorCode {
 	,ERR008				(HttpStatus.UNAUTHORIZED,				"Wrong password")
 	,ERR009				(HttpStatus.BAD_REQUEST,				"User not found with username: {}")
 	,ERR010				(HttpStatus.BAD_REQUEST,				"The refresh limit was reached! Please, athenticate again.")
+	
+	,ERR_CHAT001		(HttpStatus.CONFLICT,					"A chat already exists here. Cannot create another.")
 	;
 	
 	private HttpStatus status;

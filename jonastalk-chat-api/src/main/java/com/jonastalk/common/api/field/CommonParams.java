@@ -24,6 +24,9 @@ public enum CommonParams {
 	,REQUEST_HEADERS		("requestHeaders")
 	,REQUEST_URL			("requestURL")
 	,HTTP_METHOD			("httpMethod")
+	
+	,USERNAME				("username")
+	,USER_ROLES				("userRoles")
 	;
 	
 	private String value;

@@ -1,7 +1,12 @@
 package com.jonastalk.common.api;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -10,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -60,6 +66,24 @@ public class ApiAspect {
         proceedResult = joinPoint.getArgs();
         log.debug("[{} - {}] \"{}\" - {}", className, methodName, requestURI, proceedResult);
         
+        
+        
+        // ------------------------
+        // Get Header
+        // ------------------------ 
+        
+        // User Authorization (All service but Auth service)
+        if (requestAttributes == null || requestAttributes.getRequest() == null) 
+        	throw new CustomException(EnumErrorCode.ERR005);
+        
+        HttpServletRequest request = requestAttributes.getRequest();
+        final String username = request.getHeader("X-User-Id");
+        final String userRolesString = request.getHeader("X-User-Roles");
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(userRolesString)) {
+        	throw new CustomException(EnumErrorCode.ERR005);
+        }
+        String[] userRolesStringArray = userRolesString.split(",");
+        final List<String> userRoles = new ArrayList<>(Arrays.asList(userRolesStringArray));
         
         
         // ------------------------
@@ -122,13 +146,17 @@ public class ApiAspect {
         
         
         // ------------------------
-        // Put TransactionId (ULID)
+        // Put UserInfo, TransactionId (ULID)
         // ------------------------
 		String transactionId = ULID.random() + ULID.random().substring(10);
 		if (AllValidationRequestURI.ConrollerParamType.MAP_COMMON_DATA.equals(conrollerParamType)) {
 			dataParam.put(CommonParams.TRANSACTION_ID.getValue(), transactionId);
+			dataParam.put(CommonParams.USERNAME.getValue(), username);
+			dataParam.put(CommonParams.USER_ROLES.getValue(), userRoles);
     	} else if (AllValidationRequestURI.ConrollerParamType.MAP.equals(conrollerParamType)) {
     		param.put(CommonParams.TRANSACTION_ID.getValue(), transactionId);
+    		param.put(CommonParams.USERNAME.getValue(), username);
+    		param.put(CommonParams.USER_ROLES.getValue(), userRoles);
     	} else {
     		
     	}
