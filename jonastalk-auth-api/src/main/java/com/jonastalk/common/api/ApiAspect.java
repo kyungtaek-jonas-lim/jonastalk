@@ -63,6 +63,25 @@ public class ApiAspect {
         
         
         // ------------------------
+        // Get Header
+        // ------------------------ 
+        
+//        // User Authorization (All service but Auth service)
+//        if (requestAttributes == null || requestAttributes.getRequest() == null) 
+//        	throw new CustomException(EnumErrorCode.ERR005);
+//        
+//        HttpServletRequest request = requestAttributes.getRequest();
+//        final String username = request.getHeader("X-User-Id");
+//        final String userRolesString = request.getHeader("X-User-Roles");
+//        if (!StringUtils.hasText(username) || !StringUtils.hasText(userRolesString)) {
+//        	throw new CustomException(EnumErrorCode.ERR005);
+//        }
+//        String[] userRolesStringArray = userRolesString.split(",");
+//        final List<String> userRoles = new ArrayList<>(Arrays.asList(userRolesStringArray));
+        
+        
+        
+        // ------------------------
         // Get Parameter
         // - proceedResult has a form that is set in Controllers with @RequestBody
         // ------------------------ 
@@ -122,13 +141,17 @@ public class ApiAspect {
         
         
         // ------------------------
-        // Put TransactionId (ULID)
+        // Put UserInfo, TransactionId (ULID)
         // ------------------------
 		String transactionId = ULID.random() + ULID.random().substring(10);
 		if (AllValidationRequestURI.ConrollerParamType.MAP_COMMON_DATA.equals(conrollerParamType)) {
 			dataParam.put(CommonParams.TRANSACTION_ID.getValue(), transactionId);
+//			dataParam.put(CommonParams.USERNAME.getValue(), username); // Only for not auth service
+//			dataParam.put(CommonParams.USER_ROLES.getValue(), userRoles); // Only for not auth service
     	} else if (AllValidationRequestURI.ConrollerParamType.MAP.equals(conrollerParamType)) {
     		param.put(CommonParams.TRANSACTION_ID.getValue(), transactionId);
+//    		param.put(CommonParams.USERNAME.getValue(), username); // Only for not auth service
+//    		param.put(CommonParams.USER_ROLES.getValue(), userRoles); // Only for not auth service
     	} else {
     		
     	}
