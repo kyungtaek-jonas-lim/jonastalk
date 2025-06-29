@@ -121,7 +121,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/generate\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/generate\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"username\": \"root\",\r\n        \"password\": \"1234\"\r\n    }\r\n}"
+											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/generate\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/generate\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"username\": \"admin\",\r\n        \"password\": \"1234\"\r\n    }\r\n}"
 										},
 										"url": {
 											"raw": "http://localhost:8443/auth/v1/token/access/generate",
@@ -157,7 +157,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/refresh\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/refresh\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"refreshToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiUkVGUkVTSCIsImV4cCI6MTc0MjYwMjAzMiwiaWF0IjoxNzQyNjAwMjMyfQ.VM1DnPJiaYU-lZfwP_DwgYDZn2S7kC0kaYcIryUE42j62lSxmX9Jq8OdnSiOROA4fFuxPvwFXJQNSNLy-DYCZry8xrwc7pBoPitaXojxKvqETAZawVb56RubIHc2QbzaIJPMdPstCaAePC-u8HRWd6Jj2OaKbQfwBSZwrIqXJddNCpaUOHXO-u49OypjDSyR46PW8qlji03yclzsOmo-LJUWcpBHBtXV78D9l05XNUuE6cHPXacU_M--L5NVp4ztWxGdbsKGxKqfSSLWL6tkL3zXogiFjO0wJIB_Az4z78fxAvC99QtW-gEH0pL0HqvwGQT9f5wA0cJQCpPj7xRyiw\"\r\n    }\r\n}"
+											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/refresh\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/refresh\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"refreshToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiUkVGUkVTSCIsImV4cCI6MTc1MTA4MjI3MiwiaWF0IjoxNzUxMDgwNDcyfQ.KaK-ozfRuafJu_Phl3lJ8pYOMjz6gc2TCnsxb1-XHA_fsKkZgTqEX6_MLuLxnggsiV5QjW6OxGzAfcqHneSHwWn0kRbKbzNZCNTwa8_MHPoUjsbA8f8i38aj2y0SUm5ZbjXl6xCixR6qnKSBiNWZYzB1rDv54mgf1q1Yx6tyXc0yyqYFKVO2_hjujJDz2pM2b2UtTaV5Hfic7EDxebaE6ganosOPMPde1KmgQIVOfXs0tkVnQkt7tXDR7GKqLMdR9tichqGtIIwxlvCS93z80yTtVSkrgfvG4_b1axACf0MhDMml-VoNeTp5NgVnYPdqs6WK1cz96R1J-l-D3-8uQQ\"\r\n    }\r\n}"
 										},
 										"url": {
 											"raw": "http://localhost:8443/auth/v1/token/access/refresh",
@@ -193,7 +193,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/validate\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/validate\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"accessToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzQyNjAxMDE1LCJpYXQiOjE3NDI2MDA0MTV9.kV-kuIor82SvTKC_b5jcV6ARDxHUZHeDsGKaTR1Ln-eZbSroIq8v4y9-aUd9IuqYgx7SyIBZqyPqavU_9b8FdmTDuVermGLekt9PdS3UFKE9ppHXs8RUyeUnPW3WnbF7zlhJxFwe8sWnIlYg_4KQe3mN05WcF4dpyEYYW8gbO-pnMNP340hKvZZ1OEPYlDLgbSrlxGaQDDeavON_X_7wl0Fek-6dEWjruftgfMcJwVL1_8BpZDUADXEec1CCZ5_jEEjk5sZzmmlWnl4pc0J3gG00XwhdkFs4OryMgev7S1_XvgaQ-F6AeJ2pyESp8W2oGzzFANBjT_K40Bx_XthrgA\",\r\n        \"username\": \"root\"\r\n    }\r\n}"
+											"raw": "// Through API Gateway) http://localhost:8443/auth/v1/token/access/validate\r\n// Direcly to Auth) http://localhost:8002/v1/token/access/validate\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"accessToken\": \"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb290IiwidG9rZW5UeXBlIjoiQUNDRVNTIiwiZXhwIjoxNzUxMDgxMDcyLCJpYXQiOjE3NTEwODA0NzJ9.jq1_w5sSMwbLECy2yUM0KKtC1MA96kh87tIW0Zf1KsJDaSzvWF4u9Bu6bpAOU-os4OSO7PW__rPZln2ZClcggypTFBTRjtgUVhybe1oa6Q47lQJsOUgict3fpc4xzqbMjCmkI8rUuPzxolSttqVecazW7PUoZnQMkPJyZQoC-E7u9KqB05KuuypqkSVbHrDLhaGCrKtX8wT9VrvBbBOcJzu7bUY2FHC39h3T3vP308dHERp_JpgC4vmgs3Kw2EF9SzMDWUHEAZ0w-aIHULCqv2OL5rBb7_XGDBJvnoo7deGI3qfSZFnhOTyU1D1qgEToYUrqKGqn1l5cNmrASNAn2g\"\r\n    }\r\n}"
 										},
 										"url": {
 											"raw": "http://localhost:8443/auth/v1/token/access/validate",
@@ -418,6 +418,58 @@
 								}
 							},
 							"response": []
+						}
+					]
+				},
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "chat",
+							"item": [
+								{
+									"name": "create",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInRva2VuVHlwZSI6IkFDQ0VTUyIsImV4cCI6MTc1MTE4NTM4NiwiaWF0IjoxNzUxMTg0Nzg2fQ.qZLAC35ynjZYYZLfjgEJ8JCu684CdCWHu0rglsDrN0aht5kz5FyyEu8GviMJevad5APVyQ_m4cj-w0U8A_kE3vIc_9Nk4vCx23KvcHkH0eCMEhMfsA0YFMW5hzH2FDiHAapa7ht92Yp08RdpUz_S3wGXJcoQCBR9Z3mItQWXwNdnCpqE73xtDiGBsS48UcWy1SuzbXyg8k_bPUA7Kh-sbgYZbMrO7iHyqD9tOtQqcd5_yfNIkjjSsyOS5BQnzDHY-zJk_qswXwOzyAV3WNyJ7S3f87U1Y86HO_VOsCebgGpyDFdfiDR2ze9HQGEKjuN6Q4Qs41o_NU5DLGQLz5eypg",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "// Through API Gateway) http://localhost:8443/chat/v1/chat/create\r\n// Direcly to Auth) http://localhost:8001/v1/chat/create\r\n{\r\n    \"common\": {},\r\n    \"data\": {\r\n        \"toUserIds\": [\r\n            \"admin\"\r\n        ]\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8443/chat/v1/chat/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8443",
+											"path": [
+												"chat",
+												"v1",
+												"chat",
+												"create"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}

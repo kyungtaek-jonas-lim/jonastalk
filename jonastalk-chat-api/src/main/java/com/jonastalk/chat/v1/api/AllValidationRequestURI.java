@@ -3,6 +3,7 @@ package com.jonastalk.chat.v1.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jonastalk.chat.v1.api.field.ChatCreateRequest;
 import com.jonastalk.chat.v1.api.field.WebsocketConnectionRequest;
 import com.jonastalk.common.api.field.IRequestParam;
 
@@ -19,6 +20,7 @@ import lombok.Getter;
 public enum AllValidationRequestURI {
 
 	WEBSOCKET_CONNECTION_REQUEST		(WebsocketConnectionRequest.REQUEST_URI,			WebsocketConnectionRequest.USERNAME,		ConrollerParamType.MAP_COMMON_DATA)
+	,CHAT_CREATE_REQUEST				(ChatCreateRequest.REQUEST_URI,						ChatCreateRequest.TO_USER_IDS,				ConrollerParamType.MAP_COMMON_DATA)
 	;
 	
 	public enum ConrollerParamType {
