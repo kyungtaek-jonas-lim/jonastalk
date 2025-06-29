@@ -45,7 +45,12 @@ public class ChatPhotoRelationEntity {
     private String photoUrl;
 
     @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Photo Registration Datetime")
     private LocalDateTime registrationDatetime;
+
+    @Column(name = "PHOTO_DELETED_YN", nullable = false)
+    @ApiModelProperty(notes = "Whether the photo was deleted")
+    private boolean photoDeletedYn;
 }

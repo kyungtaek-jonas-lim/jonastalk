@@ -55,6 +55,7 @@ public class ChatMessageDetailEntity {
     private String userId;
 
     @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Message Registration Datetime")
     private LocalDateTime registrationDatetime;

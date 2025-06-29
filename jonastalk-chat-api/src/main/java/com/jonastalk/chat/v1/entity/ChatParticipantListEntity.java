@@ -50,12 +50,18 @@ public class ChatParticipantListEntity {
     private String chatId;
 
     @Column(name = "ENTRANCE_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Entrance Datetime")
     private LocalDateTime entranceDatetime;
+    
+    @Column(name = "ENTRANCE_STATUS_CODE", length = 1, nullable = false)
+    @ApiModelProperty(notes = "Entrance Status Code (e.g., W: WAIT, R: REJECT, A: APPROVE)")
+    private String entranceStatusCode;
 
     @Column(name = "LAST_PARTICIPATION_DATETIME", nullable = false,
-    		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
+    		insertable = false, updatable = false,
+            columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Last Participation Datetime")
     private LocalDateTime lastParticipationDatetime;
 

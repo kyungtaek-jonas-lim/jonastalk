@@ -63,6 +63,7 @@ CREATE TABLE `t_chat_chat_participant_l` (
   `USER_ID` VARCHAR(42) NOT NULL COMMENT 'User Identifier',
   `CHAT_ID` VARCHAR(42) NOT NULL COMMENT 'Chat Room Identifier',
   `ENTRANCE_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT 'Entrance Datetime',
+  `ENTRANCE_STATUS_CODE` VARCHAR(1) NOT NULL COMMENT 'Entrance Status Code (e.g., W: WAIT, R: REJECT, A: APPROVE)',
   `LAST_PARTICIPATION_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT 'Last Participation Datetime',
   `ANNOUNCEMENT_CHECK_YN` TINYINT(1) NOT NULL COMMENT 'Whether the user checked the latest announcement',
   PRIMARY KEY (`USER_ID`, `CHAT_ID`),
@@ -75,8 +76,9 @@ CREATE TABLE `t_chat_chat_participant_l` (
 -- drop table t_chat_chat_photo_r;
 CREATE TABLE `t_chat_chat_photo_r` (
   `CHAT_ID` VARCHAR(42) NOT NULL COMMENT 'Chat Room Identifier',
-  `PHOTO` VARCHAR(500) NOT NULL COMMENT 'URL of the Chat Room Photo (S3 or other storage)',
+  `PHOTO_URL` VARCHAR(500) NOT NULL COMMENT 'URL of the Chat Room Photo (S3 or other storage)',
   `REGISTRATION_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT 'Photo Registration Datetime',
+  `PHOTO_DELETED_YN` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Whether the photo was deleted',
   PRIMARY KEY (`CHAT_ID`),
   KEY `idx_chat_chat_photo_r_n01` (`REGISTRATION_DATETIME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Chat Photo Relation';
@@ -88,6 +90,7 @@ CREATE TABLE `t_chat_chat_photo_r` (
 CREATE TABLE `t_chat_chat_announcement_h` (
   `CHAT_ID` VARCHAR(42) NOT NULL COMMENT 'Chat Room Identifier',
   `REGISTRATION_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT 'Announcement Registration Datetime',
+  `UPDATE_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT 'Announcement Update Datetime',
   `ANNOUNCEMENT_CONTENT` VARCHAR(200) NOT NULL COMMENT 'Announcement Content',
   PRIMARY KEY (`CHAT_ID`, `REGISTRATION_DATETIME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Chat Announcement History';
@@ -119,7 +122,7 @@ CREATE TABLE `t_chat_message_sympathy_h` (
   `CHAT_ID` VARCHAR(42) NOT NULL COMMENT 'Chat Room Identifier',
   `CHAT_MESSAGE_ID` VARCHAR(42) NOT NULL COMMENT 'Chat Message Identifier',
   `USER_ID` VARCHAR(42) NOT NULL COMMENT 'User Identifier',
-  `REGISTRATION_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT 'Sympathy Registration Datetime',
+  `REGISTRATION_DATETIME` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT 'Sympathy Registration Datetime',
   `SYMPARHY_CODE` VARCHAR(10) NOT NULL COMMENT 'Sympathy Code',
   PRIMARY KEY (`CHAT_ID`, `CHAT_MESSAGE_ID`, `USER_ID`),
   KEY `idx_chat_message_sympathy_h_n01` (`USER_ID`),

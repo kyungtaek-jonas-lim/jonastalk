@@ -46,6 +46,7 @@ public class ChatChatDetailEntity {
     private String creatorUserId;
 
     @Column(name = "CREATER_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Chat Room Creation Datetime")
     private LocalDateTime creationDatetime;
@@ -55,6 +56,7 @@ public class ChatChatDetailEntity {
     private String chatManagerUserId;
 
     @Column(name = "CHAT_MANAGER_MODIFICATION_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Datetime when the chat manager was last changed")
     private LocalDateTime chatManagerModificationDatetime;
@@ -64,6 +66,7 @@ public class ChatChatDetailEntity {
     private String chatTypeCode;
 
     @Column(name = "CHAT_INFO_MODIFICATION_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Datetime when the chat room info was last modified")
     private LocalDateTime chatInfoModificationDatetime;

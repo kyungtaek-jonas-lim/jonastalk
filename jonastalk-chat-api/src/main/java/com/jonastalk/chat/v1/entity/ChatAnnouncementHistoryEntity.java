@@ -40,9 +40,17 @@ public class ChatAnnouncementHistoryEntity {
 
     @Id
     @Column(name = "REGISTRATION_DATETIME", nullable = false,
+    		insertable = false, updatable = false,
     		columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
     @ApiModelProperty(notes = "Announcement Registration Datetime")
     private LocalDateTime registrationDatetime;
+    
+    @Id
+    @Column(name = "UPDATE_DATETIME", nullable = false,
+	    insertable = false, updatable = false,
+	    columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)")
+    @ApiModelProperty(notes = "Announcement Update Datetime")
+    private LocalDateTime updateDatetime;
 
     @Column(name = "ANNOUNCEMENT_CONTENT", length = 200, nullable = false)
     @ApiModelProperty(notes = "Announcement Content")
