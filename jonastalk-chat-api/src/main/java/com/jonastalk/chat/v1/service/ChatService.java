@@ -1,9 +1,5 @@
 package com.jonastalk.chat.v1.service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.jonastalk.chat.v1.api.field.ChatCreateRequest;
-import com.jonastalk.chat.v1.api.field.ChatCreateResponse;
 import com.jonastalk.chat.v1.entity.ChatChatDetailEntity;
 import com.jonastalk.chat.v1.entity.ChatParticipantListEntity;
 import com.jonastalk.chat.v1.repository.ChatChatDetailRepository;
 import com.jonastalk.chat.v1.repository.ChatParticipantListRepository;
-import com.jonastalk.common.api.field.CommonParams;
 
 import io.azam.ulidj.ULID;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +34,7 @@ public class ChatService {
 	ChatChatDetailRepository chatChatDetailRepository;
 
 	/**
-	 * @name createChat(@Map<String, Object> param)
+	 * @name createChat(String fromUserId, Set<String> toUserIds)
 	 * @brief Create chat
 	 * @author Jonas Lim
 	 * @date June 27, 2025
@@ -49,32 +42,8 @@ public class ChatService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> createChat(Map<String, Object> param) throws Exception {
-		
-	   	// ----------------------
-    	// 1. Get Params
-    	// ----------------------
-    	final List<String> userIds = (List) param.get(ChatCreateRequest.TO_USER_IDS.getName());
-    	final String username = (String) param.get(CommonParams.USERNAME.getValue());
-//    	final List<String> userRoles = (List) param.get(CommonParams.USER_ROLES.getValue());
-    	
-    	
-    	// ----------------------
-    	// 2. Biz Logic
-    	// ----------------------
-    	final String chatId = createChatAndReturnChatId(username, new HashSet<>(userIds));
-    	
-    	// ----------------------
-    	// 3. Response
-    	// ----------------------
-    	Map<String, Object> responseData = new HashMap<>();
-    	responseData.put(ChatCreateResponse.CHAT_ID.getName(), chatId);
-		return responseData;
-	}
-	
-
     @Transactional
-	public String createChatAndReturnChatId(String fromUserId, Set<String> toUserIds) throws Exception {
+	public String createChat(String fromUserId, Set<String> toUserIds) throws Exception {
 
 		// --------------
 		// 1. Validate Chat

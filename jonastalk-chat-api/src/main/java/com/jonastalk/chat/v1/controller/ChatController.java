@@ -1,5 +1,8 @@
 package com.jonastalk.chat.v1.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jonastalk.chat.v1.api.field.ChatCreateRequest;
+import com.jonastalk.chat.v1.api.field.ChatCreateResponse;
 import com.jonastalk.chat.v1.service.ChatService;
+import com.jonastalk.common.api.field.CommonParams;
 
 import io.swagger.annotations.Api;
 
@@ -44,7 +50,26 @@ public class ChatController {
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createChat(@RequestBody Map<String, Object> param) throws Exception {
-    	return ResponseEntity.ok(chatService.createChat(param));
+
+	   	// ----------------------
+    	// 1. Get Params
+    	// ----------------------
+    	final List<String> userIds = (List) param.get(ChatCreateRequest.TO_USER_IDS.getName());
+    	final String username = (String) param.get(CommonParams.USERNAME.getValue());
+//    	final List<String> userRoles = (List) param.get(CommonParams.USER_ROLES.getValue());
+    	
+    	
+    	// ----------------------
+    	// 2. Biz Logic
+    	// ----------------------
+    	final String chatId = chatService.createChat(username, new HashSet<>(userIds));
+    	
+    	// ----------------------
+    	// 3. Response
+    	// ----------------------
+    	Map<String, Object> responseData = new HashMap<>();
+    	responseData.put(ChatCreateResponse.CHAT_ID.getName(), chatId);
+    	return ResponseEntity.ok(responseData);
 	}
 
 
