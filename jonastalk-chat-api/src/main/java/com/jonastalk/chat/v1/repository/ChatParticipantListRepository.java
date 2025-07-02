@@ -1,6 +1,6 @@
 package com.jonastalk.chat.v1.repository;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,11 +28,12 @@ public interface ChatParticipantListRepository extends JpaRepository<ChatPartici
 //		    HAVING COUNT(DISTINCT USER_ID) = :size
 //		    """, nativeQuery = true)
 	@Query(value = "\r\n"
-			+ "	    SELECT CHAT_ID\r\n"
-			+ "	    FROM t_chat_chat_participant_l\r\n"
-			+ "	    WHERE USER_ID IN (:userIds)\r\n"
-			+ "	    GROUP BY CHAT_ID\r\n"
-			+ "	    HAVING COUNT(DISTINCT USER_ID) = :size", nativeQuery = true)
-	String findChatIdsWithExactParticipants(@Param("userIds") List<String> userIds, @Param("size") int size);
+			+ "    SELECT CHAT_ID\r\n"
+			+ "    FROM t_chat_chat_participant_l\r\n"
+			+ "    GROUP BY CHAT_ID\r\n"
+			+ "    HAVING \r\n"
+			+ "        COUNT(*) = :size\r\n"
+			+ "        AND COUNT(CASE WHEN USER_ID IN (:userIds) THEN 1 END) = :size", nativeQuery = true)
+	String findChatIdsWithExactParticipants(@Param("userIds") Set<String> userIds, @Param("size") int size);
 
 }

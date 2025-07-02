@@ -1,9 +1,11 @@
 package com.jonastalk.chat.v1.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -18,10 +20,9 @@ import com.jonastalk.chat.v1.entity.ChatParticipantListEntity;
 import com.jonastalk.chat.v1.repository.ChatChatDetailRepository;
 import com.jonastalk.chat.v1.repository.ChatParticipantListRepository;
 import com.jonastalk.common.api.field.CommonParams;
-import com.jonastalk.common.consts.EnumErrorCode;
-import com.jonastalk.common.exception.CustomException;
 
 import io.azam.ulidj.ULID;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @name ChatService.java
@@ -29,6 +30,7 @@ import io.azam.ulidj.ULID;
  * @author Jonas Lim
  * @date Jun 27, 2025
  */
+@Slf4j
 @Service
 public class ChatService {
 	
@@ -60,7 +62,7 @@ public class ChatService {
     	// ----------------------
     	// 2. Biz Logic
     	// ----------------------
-    	final String chatId = createChatAndReturnChatId(username, userIds);
+    	final String chatId = createChatAndReturnChatId(username, new HashSet<>(userIds));
     	
     	// ----------------------
     	// 3. Response
@@ -72,14 +74,16 @@ public class ChatService {
 	
 
     @Transactional
-	public String createChatAndReturnChatId(String fromUserId, List<String> toUserIds) throws Exception {
+	public String createChatAndReturnChatId(String fromUserId, Set<String> toUserIds) throws Exception {
 
 		// --------------
 		// 1. Validate Chat
+    	toUserIds.add(fromUserId); // Add Sender
     	String chatId = findChatIdsWithExactParticipants(toUserIds);
     	if (StringUtils.hasText(chatId)) {
     		// Already exists
-            throw new CustomException(EnumErrorCode.ERR_CHAT001);
+//            throw new CustomException(EnumErrorCode.ERR_CHAT001);
+            return chatId;
     	}
     	
 		// --------------
@@ -122,6 +126,7 @@ public class ChatService {
     	chatParticipantListRepository.save(chatParticipantListEntity);
     	
     	// Invitee
+    	toUserIds.remove(fromUserId); // Remove Sender
     	for (String toUserId: toUserIds) {
             ChatParticipantListEntity entity = ChatParticipantListEntity.builder()
             		.chatId(chatId)
@@ -135,7 +140,7 @@ public class ChatService {
 	}
 	
 	
-	public String findChatIdsWithExactParticipants(List<String> userIds) throws Exception {
+	public String findChatIdsWithExactParticipants(Set<String> userIds) throws Exception {
     	return chatParticipantListRepository.findChatIdsWithExactParticipants(userIds, userIds.size());
 	}
 
