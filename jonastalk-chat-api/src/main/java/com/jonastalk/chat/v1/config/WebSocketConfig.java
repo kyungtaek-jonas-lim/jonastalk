@@ -30,7 +30,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	 */
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatWebSocketHandler, "/v1/chat")
+        registry.addHandler(chatWebSocketHandler, "/v1/ws")
                 .setAllowedOriginPatterns("*");
     }
 }
