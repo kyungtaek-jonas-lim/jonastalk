@@ -1,5 +1,7 @@
 package com.jonastalk.chat.v1.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.jonastalk.chat.v1.api.field.ChatGetResponse;
 import com.jonastalk.chat.v1.entity.ChatChatDetailEntity;
 import com.jonastalk.chat.v1.entity.ChatParticipantListEntity;
 import com.jonastalk.chat.v1.repository.ChatChatDetailRepository;
@@ -111,6 +114,30 @@ public class ChatService {
 	
 	public String findChatIdsWithExactParticipants(Set<String> userIds) throws Exception {
     	return chatParticipantListRepository.findChatIdsWithExactParticipants(userIds, userIds.size());
+	}
+	
+	
+	public Map<String, Object> getChat(String userId, String chatId) throws Exception {
+
+		ChatChatDetailEntity chatDetail = chatChatDetailRepository.findById(chatId)
+			.orElseThrow(() -> new Exception("Chat not found: " + chatId));
+
+		Map<String, Object> chatInfo = new HashMap<>();
+		chatInfo.put(ChatGetResponse.CHAT_ID.getName(), chatDetail.getChatId());
+		chatInfo.put(ChatGetResponse.CREATOR_USER_ID.getName(), chatDetail.getCreatorUserId());
+		chatInfo.put(ChatGetResponse.CREATION_DATE_TIME.getName(), chatDetail.getCreationDatetime());
+		chatInfo.put(ChatGetResponse.CHAT_MANAGER_USER_ID.getName(), chatDetail.getChatManagerUserId());
+		chatInfo.put(ChatGetResponse.CHAT_MANAGER_MODIFITION_DATETIME.getName(), chatDetail.getChatManagerModificationDatetime());
+		chatInfo.put(ChatGetResponse.CHAT_TYPE_CODE.getName(), chatDetail.getChatTypeCode());
+		chatInfo.put(ChatGetResponse.CHAT_INFO_MODIFICATION_DATETIME.getName(), chatDetail.getChatInfoModificationDatetime());
+		chatInfo.put(ChatGetResponse.TITLE.getName(), chatDetail.getTitle());
+		chatInfo.put(ChatGetResponse.INTRO.getName(), chatDetail.getIntro());
+		chatInfo.put(ChatGetResponse.PASSWORD.getName(), chatDetail.getPassword());
+		chatInfo.put(ChatGetResponse.ANNOUNCEMENT_YN.getName(), chatDetail.isAnnouncementYn());
+		chatInfo.put(ChatGetResponse.PHOTO_EXISTENCE_YN.getName(), chatDetail.isPhotoExistenceYn());
+		chatInfo.put(ChatGetResponse.INVITATION_LINK.getName(), chatDetail.getInvitationLink());
+
+		return chatInfo;
 	}
 
 }

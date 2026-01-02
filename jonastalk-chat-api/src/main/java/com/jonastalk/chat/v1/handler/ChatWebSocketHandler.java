@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jonastalk.chat.v1.api.field.WebsocketChatIncomingMessageRequest;
 import com.jonastalk.chat.v1.api.field.WebsocketChatOutgoingMessageResponse;
 import com.jonastalk.chat.v1.api.field.WebsocketConnectionRequest;
+import com.jonastalk.chat.v1.service.ChatService;
 import com.jonastalk.common.component.RedisPublisher;
 import com.jonastalk.common.component.RedisSubscriberManager;
 import com.jonastalk.common.component.ValidationComponent;
@@ -54,6 +56,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	@Autowired
 	RedisPublisher redisPublisher;
+	
+	@Autowired
+	ChatService chatService;
 	
     /**
 	 * @name WebsocketMessageType
@@ -110,12 +115,23 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     	        final Set<String> sessionIds = chatWebSocketConnectionManager.getChatWebSocketSessionIdsByUsername(username);
     	        for (String sid: sessionIds) {
     	        	final WebSocketSession toSession = webSocketSessionStore.get(sid);
-    	        	if (toSession != null && toSession.isOpen()) {
-    	        		try {
-							toSession.sendMessage(new TextMessage(msg));
-						} catch (IOException e) {
-							log.error("WebSocket message send failed. sessionId={}, message={}", toSession.getId(), msg, e);
-						}
+    	        	
+    	        	if (toSession != null) {
+        	        	boolean succeededInSendingMessage = false;
+        	        	if (toSession.isOpen()) {
+	    	        		try {
+								toSession.sendMessage(new TextMessage(msg));
+								succeededInSendingMessage = true;
+							} catch (IOException e) {
+								log.error("WebSocket message send failed. sessionId={}, message={}", toSession.getId(), msg, e);
+							}
+        	        	}
+        	        	if (!succeededInSendingMessage) {
+        	        		// Save it in Redis so it can be sent later in the kafka logic.
+        	        		
+        	        		
+                            // TODO: Decide how to implement this part with Kafka.
+        	        	}
     	        	}
     	        }
     		});
@@ -257,8 +273,31 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             log.info("[RECEIVED] chat message to send: {'{}'} -> {'{}'}, message: {}", fromUserId, String.join("','", (List) messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName()) ), incomingMessage);
         
 	        
-	        // Save message to database
-	        
+            // Check and create chat
+	        List<String> toUserIdsList = (List)messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
+	        Set<String> toUserIds = new HashSet<>(toUserIdsList);
+        	String chatId = chatService.findChatIdsWithExactParticipants(toUserIds);
+        	if (!StringUtils.hasText(chatId)) {
+        		// Create a new chat if there's no chat
+        		chatId = chatService.createChat(fromUserId, toUserIds);
+        	}
+        	
+        	
+	        // Save message to database (Only Main table, other tables will be used in the kafka logic)
+        	
+        	
+            
+            // Sent message to Kafka
+        	
+        	/*
+        	 * Process
+        	 	1. Client calls POST /messages
+				2. API service saves to DB
+				3. API service produces to Kafka
+				4. Kafka consumer handles side effects (audit, analytics, push, etc.)
+				5. Consumer publishes to Redis Pub/Sub (chat-channel:{chatId})
+				6. WebSocket gateway receives Redis message → pushes to clients
+        	 */
 	        
 	
 	        /*
@@ -270,10 +309,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 				}
 	         */
 	        // Process outgoing message
-	        final List<String> toUserIdsList = (List)messageMap.get(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
-	        Set<String> toUserIds = new HashSet<>(toUserIdsList);
 	        messageMap.remove(WebsocketChatIncomingMessageRequest.TO_USER_IDS.getName());
 	        messageMap.put(WebsocketChatOutgoingMessageResponse.FROM_USER_ID.getName(), fromUserId);
+	        // Add timestamp (DB time)
 	        final String outgoingMessage = objectMapper.writeValueAsString(messageMap);
 	        
 	        
