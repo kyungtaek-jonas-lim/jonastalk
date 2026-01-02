@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -58,6 +59,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             	}
             }
             if (skipAuthorization) {
+                log.info("Skipping authorization for request: {}", requestUrl);
                 log.info("Global Filter Message: {}", config.getMessage());
                 if (config.isShowPreLogger()) {
                     log.info("Global Filter Start: request id -> {}", request.getId());
@@ -70,16 +72,29 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             }
 
             // -------------------------
-            // 2. Authorization Validation
-            String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                log.warn("Missing or invalid Authorization header");
-                response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                return response.setComplete();
+            // 3. Authorization Validation
+            String upgradeHeader = request.getHeaders().getFirst("Upgrade");
+            boolean isWebSocket = "websocket".equalsIgnoreCase(upgradeHeader);
+            
+            String token = null;
+            if (isWebSocket) { // For WebSocket, Get Access Token from Query String
+                MultiValueMap<String, String> queryParams = request.getQueryParams();
+                token = queryParams.getFirst("accessToken");
+                if (token == null || token.isEmpty()) {
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return response.setComplete();
+                }
+            } else { // Get Access Token from Header
+                String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+                if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                    log.warn("Missing or invalid Authorization header");
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return response.setComplete();
+                }
+                token = authHeader.substring(7);
             }
             
             // Request Body
-            String token = authHeader.substring(7);
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("common", new HashMap<>());
             Map<String, Object> data = new HashMap<>();
