@@ -38,21 +38,27 @@ Follow these instructions to set up your development environment.
 	- Install Library
 		1. Common
 			```bash
-			cd jonastalk-api-discovery
-			./mvnw clean install
-			./mvnw spring-boot:run
+			
+			sh ./jonastalk-api-discovery.sh
+			#cd jonastalk-api-discovery
+			#./mvnw clean install
+			#./mvnw spring-boot:run
 
-			cd jonastalk-api-gw
-			./mvnw clean install
-			./mvnw spring-boot:run
+			sh ./jonastalk-api-gw.sh
+			#cd jonastalk-api-gw
+			#./mvnw clean install
+			#./mvnw spring-boot:run
 
-			cd jonastalk-auth-api
-			./mvnw clean install
-			./mvnw spring-boot:run
 
-			cd jonastalk-chat-api
-			./mvnw clean install
-			./mvnw spring-boot:run
+			sh ./jonastalk-auth-api.sh
+			#cd jonastalk-auth-api
+			#./mvnw clean install
+			#./mvnw spring-boot:run
+
+			sh ./jonastalk-chat-api.sh
+			#cd jonastalk-chat-api
+			#./mvnw clean install
+			#./mvnw spring-boot:run
 			```
 		2. Windows
 			```cmd
