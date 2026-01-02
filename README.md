@@ -38,7 +38,6 @@ Follow these instructions to set up your development environment.
 	- Install Library
 		1. Common
 			```bash
-			
 			sh ./jonastalk-api-discovery.sh
 			#cd jonastalk-api-discovery
 			#./mvnw clean install
@@ -48,7 +47,6 @@ Follow these instructions to set up your development environment.
 			#cd jonastalk-api-gw
 			#./mvnw clean install
 			#./mvnw spring-boot:run
-
 
 			sh ./jonastalk-auth-api.sh
 			#cd jonastalk-auth-api
